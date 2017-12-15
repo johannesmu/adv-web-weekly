@@ -6,4 +6,6 @@
   <script src="components/jquery/dist/jquery.js"></script>
   <script src="components/bootstrap/dist/js/bootstrap.js"></script>
   <script src="script.js"></script>
+  <?php $page_title = basename( $_SERVER["PHP_SELF"] ); ?>
+  <title><?php echo $page_title; ?></title>
 </head>
