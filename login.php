@@ -2,6 +2,10 @@
 session_start();
 
 include("autoloader.php");
+
+//site configuration
+include("includes/config.php");
+
 include("includes/database.php");
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){

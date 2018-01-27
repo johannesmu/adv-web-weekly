@@ -1,4 +1,138 @@
 .price::before{
   content:"$";
-  
+  margin-right:5px;
+}
+
+.logo{
+  max-width:52px;
+  padding-left:10px;
+  display: flex;
+  align-items:center;
+  height:80px;
+}
+.logo img{
+  max-width: 100%;
+}
+.navbar-form{
+  display: flex;
+  min-width: 40vw;
+}
+.navbar-form .form-group{
+  margin-bottom: 0;
+  flex:1;
+}
+.navbar-form .form-group input{
+  border-radius:4px 0 0 4px;
+  width:100%;
+}
+.navbar-form .form-group button{
+  border-radius: 0 4px 4px 0;
+}
+.product-column{
+  min-height: 450px;
+}
+.product-title{
+  text-transform: capitalize;
+  min-height:60px;
+}
+.product-image{
+  border: 2px solid #cccccc;
+  border-radius: 4px;
+}
+.product-image:hover{
+  border-bottom:2px solid red;
+}
+
+.product-price{
+  color: #999;
+  font-weight:200;
+}
+.product-detail-row{
+  margin-top: 50px;
+}
+.product-title-single{
+  text-transform: capitalize;
+}
+.product-single-buttons{
+  margin-top: 25px;
+}
+.product-qty-button:focus{
+  outline-color:black;
+  background-color: lightblue;
+}
+.product-qty-button:active{
+  outline:0;
+}
+.product-qty-group{
+  max-width:120px;
+}
+/*animate spinner icon*/
+.spinner {
+  animation: spin 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes spin {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+
+.image-upload-group input[type="file"]{
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.image-upload-group{
+  display: flex;
+  max-width:340px;
+  flex-wrap: wrap;
+}
+.image-upload-group .image-upload-label{
+  cursor: pointer;
+  padding: 15px;
+  background-color: lightblue;
+  border-radius:6px;
+  border:1px solid #333;
+  min-height: 100px;
+  width:100px;
+  margin:5px;
+  background-size: cover;
+  background-position: center;
+  word-break:break-word;
+}
+.image-upload-label.has-image{
+  font-size:11px;
+  text-shadow:1px 1px 2px white;
+  overflow:hidden;
+  position:relative;
+}
+.image-upload-info{
+  background-color:rgba(255,255,255,0.4);
+  padding: 2px;
+  position:absolute;
+}
+.trumbowyg-box{
+  margin:0;
+}
+
+@media only screen and ( max-width:767px  ){
+  .navbar-form{
+    margin:5px 0;
+  }
+  .navbar-toggle{
+    margin:7px 0;
+  }
+  .logo{
+    height:44px;
+  }
+  .product-qty-group{
+    max-width:120px;
+  }
 }

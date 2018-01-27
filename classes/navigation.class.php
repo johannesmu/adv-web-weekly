@@ -12,7 +12,8 @@ class Navigation{
       $this -> logged_in = false;
     }
     //get the name of the current page
-    $this -> current_page = $_SERVER["PHP_SELF"];
+    $this -> current_page = basename( $_SERVER["PHP_SELF"] );
+    echo $this -> current_page;
   }
   
   public function getNavigation(){
@@ -42,7 +43,8 @@ class Navigation{
       else{
         $class = "";
       }
-      $element = "<li $class><a href=\"$link\">$name</a></li>";
+      $link_name = ucfirst( $name );
+      $element = "<li $class><a href=\"/$link\">$link_name</a></li>";
       array_push( $nav_array , $element );
     }
     //add </ul> at the end of array
