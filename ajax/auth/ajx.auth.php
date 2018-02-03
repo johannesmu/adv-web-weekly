@@ -1,5 +1,7 @@
 <?php
 session_start();
+$path = $_SERVER["DOCUMENT_ROOT"].'/ajax/ajaxautoloader.php';
+include($path);
 include("../includes/database.php");
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){

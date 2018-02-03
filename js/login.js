@@ -19,7 +19,7 @@ $(document).ready(function(){
     $.ajax({
       beforeSend:addSpinner($('button[name="login-button"]')),
       type: 'post',
-      url: 'ajax/ajaxlogin.php',
+      url: 'ajax/auth/ajx.auth.php',
       data: user,
       dataType: 'json',
       encode: true
@@ -74,3 +74,30 @@ function showAlert(type,msg){
   }
   $('#login-form').append(clone);
 }
+
+
+var login = ( function ()  {
+  let module = {};
+  module.init = () => {
+    //initialise module
+  }
+  module.bind = () => {
+    //bind listeners
+  }
+  module.showAlert = () => {
+    
+  }
+  module.spinner = ( cmd, targetelement ) => {
+    let template = $('#template-spinner').html().trim();
+    let spinner = $(template);
+    if( cmd == 'add'){
+      $(targetelement).append( spinner );
+    }
+    else if( cmd == 'remove'){
+      $(targetelement).find('.spinner').remove();
+    }
+  }
+  return module;
+}( $ ));
+
+login.init();

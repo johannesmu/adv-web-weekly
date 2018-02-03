@@ -1,22 +1,18 @@
 <?php
-class Account_Authenticate extends Database{
-  private $connection;
-  private $credential;
-  private $password;
-  private $account;
+class Account extends Database{
+  public $account_id;
   private $errors;
-  public function __construct( $credential, $password ){
+  public function __construct( ){
+    //credential can be in the form of email or username
     parent::__construct();
-    $this -> credential = $credential;
-    $this -> password = $password;
-    $this -> authenticateUser();
   }
-  private function authenticateUser(){
+  public function authenticate( $credential, $password ){
     $query = "SELECT id,username,email,password FROM accounts WHERE email=? OR username=?";
     $statement = $this -> connection -> prepare( $query );
     $statement -> bind_param("s", $this -> credential );
     if( $statement -> execute() == false ){
       //database error
+      error_log(0,"database error");
       return false;
     }
     $result = $statement -> get_result();

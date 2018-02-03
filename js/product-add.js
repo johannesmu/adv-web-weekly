@@ -1,15 +1,20 @@
 var addproduct = ( function( $ ){
   let module = {};
   module.init = function(){
-    //initialise module
+    //initialise module variables
+    //call module bind
     module.bind();
   }
   module.bind = function(){
+    //bind listeners and handlers
     $(document).ready( () => {
       $('#product-add').on('submit',(event) => { 
         // console.log(event);
         event.preventDefault(); 
       });
+      $('#new-category-btn').click( (event) => {
+        module.addCategory(event); 
+      } );
       $('#add-uploader').click( (event) => {
         module.addUploader();
       });
@@ -20,11 +25,11 @@ var addproduct = ( function( $ ){
         }
       });
       $('.image-upload-group').on('change', (event) => {
-        module.processImage(event);
+        module.previewImage(event);
       });
     });
   }
-  module.processImage = function(evt){
+  module.previewImage = function(evt){
     let input = evt.target;
     let file = input.files[0];
     //calculate size in kilobytes
@@ -43,11 +48,11 @@ var addproduct = ( function( $ ){
       let element = $('[for="'+ id +'"]');
       let style = 'background-image: url('+img+');';
       $(element).attr('style',style);
-      //clear the text inside element
-      $(element).text('');
+      //add 'has-image' class
+      $(element).addClass('has-image');
       //display information about the file
-      let fileinfo = name + size + 'KB';
-      $(element).siblings('.image-upload-info').text(fileinfo);
+      let fileinfo = name + '\n' + size + 'KB';
+      $(element).find('.image-upload-info').text(fileinfo);
     });
     //activate the reader
     reader.readAsDataURL(file);
@@ -69,6 +74,17 @@ var addproduct = ( function( $ ){
     //use timestamp for id
     let ts = new Date().getTime();
     return ts;
+  }
+  module.addCategory = (event) => {
+    let input = $('#new-category').val();
+    if( input.length > 0 ){
+      let template = $('#category-template').html().trim();
+      let elem = $(template);
+      $(elem).find('.checkbox-text').text( input );
+      console.log(elem);
+      $('.checkbox-group').append( elem );
+      $('#new-category').val('');
+    }
   }
   return module;
 }( $ ));

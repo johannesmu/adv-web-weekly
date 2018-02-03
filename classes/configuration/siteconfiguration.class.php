@@ -1,4 +1,5 @@
 <?php
+namespace configuration;
 class SiteConfiguration{
   public $site_config;
   public function __construct(  ){

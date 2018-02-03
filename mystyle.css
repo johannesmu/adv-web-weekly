@@ -106,21 +106,39 @@
   background-size: cover;
   background-position: center;
   word-break:break-word;
+  overflow:hidden;
 }
 .image-upload-label.has-image{
   font-size:11px;
-  text-shadow:1px 1px 2px white;
-  overflow:hidden;
-  position:relative;
 }
 .image-upload-info{
-  background-color:rgba(255,255,255,0.4);
   padding: 2px;
-  position:absolute;
+  word-break: break-word;
+}
+.image-upload-label.has-image .image-upload-info{
+  background-color:rgba(255,255,255,0.4);
 }
 .trumbowyg-box{
   margin:0;
 }
+
+.category-manage input[readonly]{
+  background-color: transparent;
+  border-color: #eeeeee;
+}
+.category-manage input{
+  border:1px solid #cccccc;
+  background-color: lightyellow;
+}
+.custom-control{
+  height:34px;
+  padding: 6px 12px;
+}
+.category-manage input.form-control{
+  /*border-color:transparent;*/
+  box-shadow:1px 1px 1px transparent;
+}
+
 
 @media only screen and ( max-width:767px  ){
   .navbar-form{

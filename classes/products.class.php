@@ -1,12 +1,30 @@
 <?php
+//namespace shop\products;
 class Products extends Database {
+  private $category = 0;
+  private $page = 1;
+  private $perpage = 8;
   public function __construct(){
     //call the parent's construct method
+    //the $connection of the Database class is now part of this class
+    //can be called as $this -> connection
     parent::__construct();
-    //$this -> connection = $this -> getConnection();
+    
+    //check if there are $_GET variables 
+    if( count($_GET) > 0 ){
+      if( isset($_GET["category"]) ){
+        $this -> category = $_GET["category"];
+      }
+      if( isset($_GET["page"]) ){
+        $this -> page = $_GET["page"];
+      }
+      if( isset($_GET["perpage"]) ){
+        $this -> perpage = $_GET["perpage"];
+      }
+    }
   }
   public function getProducts(){
-    //get all products from database
+    //get products from database that have images and are active
     $query = "SELECT 
             products.id,
             products.name,
@@ -40,7 +58,8 @@ class Products extends Database {
     }
     $statement -> close();
   }
-  public function getProductsInCategory ($category_id){
+  public function getProductsInCategory (){
+    $category_id = $this -> category;
     $query = "SELECT 
               products.id,
               products.name,
@@ -56,11 +75,12 @@ class Products extends Database {
               ON products_images.image_id = images.image_id 
               WHERE products_categories.category_id = ?
               AND products.active = 1
-              GROUP BY products.id";
+              GROUP BY products.id
+              OFFSET ? LIMIT ? ";
     $statement = $this -> connection -> prepare( $query );
     $statement -> bind_param( "i", $category_id );
     if( $statement -> execute() == false ){
-      return false
+      return false;
     }
     else{
       $result = $statement -> get_result();

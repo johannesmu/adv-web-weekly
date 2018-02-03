@@ -44,7 +44,15 @@ $category_names = $cat -> getCategoriesArray();
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Set categorie(s) for this product</label>
-                  <fieldset id="product-categories" class="checkbox-group">
+                  <div class="input-group">
+                    <input type="text" id="new-category" class="form-control" placeholder="add a new category">
+                    <span class="input-group-btn">
+                      <button id="new-category-btn" class="btn btn-default" type="button">
+                        Add
+                      </button>
+                    </span>
+                  </div>
+                  <div id="product-categories" class="checkbox-group">
                   <?php
                     if( count($category_names) > 0 ){
                       foreach( $category_names as $category ){
@@ -59,8 +67,7 @@ $category_names = $cat -> getCategoriesArray();
                       }
                     }
                   ?>
-                  </fieldset>
-                  <button id="add-category" class="btn btn-default">Add a new category</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -80,20 +87,37 @@ $category_names = $cat -> getCategoriesArray();
                   </div>
                   <div class="image-upload-group">
                     <div class="uploader">
-                      <label class="image-upload-label" for="image-upload-1">Select Image</label>
-                      <input type="file" id="image-upload-1" name="productimages[]">
+                      <label class="image-upload-label" for="product-image-1">
+                        <span class="image-upload-info">Select an image</span>
+                      </label>
+                      <input type="file" id="product-image-1" name="productimages[]">
+                      
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="active" value="active">
+                    Publish this product
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <button type="reset" name="reset" class="btn btn-warning">
+                  Clear Form
+                </button>
+                <button type="submit" name="submit" class="btn btn-success">
+                  Save Product
+                </button>
+              </div>
+            </div>
             
-            <button type="reset" name="reset" class="btn btn-warning">
-              Clear Form
-            </button>
-            <button type="submit" name="submit" class="btn btn-success">
-              Save Product
-            </button>
           </form>
         </div>
       </div>
@@ -103,8 +127,8 @@ $category_names = $cat -> getCategoriesArray();
     <script src="/js/product-add.js"></script>
     <template id="file-upload-template">
       <div class="uploader">
-        <label class="image-upload-label" for="">Select an image
-          <span class="image-upload-info"></span>
+        <label class="image-upload-label" for="">
+          <span class="image-upload-info">Select an image</span>
         </label>
         <input type="file" id="" name="productimages[]">
         
@@ -113,7 +137,7 @@ $category_names = $cat -> getCategoriesArray();
     <template id="category-template">
       <div class="checkbox">
         <label>
-          <input type="checkbox" name="categories[]" value="">
+          <input type="checkbox" name="categories[]" value="" checked >
           <span class="checkbox-text"></span>
         </label>
       </div>

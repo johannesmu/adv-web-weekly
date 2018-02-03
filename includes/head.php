@@ -9,10 +9,15 @@
   <script src="/js/script.js"></script>
   <script>
   <?php 
-  //print php GET vars for javascript
+  //print php GET vars for javascript to use
   $get_vars = new PrintGetVars();
   echo $get_vars;
   ?>
   </script>
-  <title><?php echo $page_title; ?></title>
+  <title>
+    <?php 
+    //output the page title
+    echo $page_title; 
+    ?>
+  </title>
 </head>
