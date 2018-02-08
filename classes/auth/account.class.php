@@ -1,5 +1,7 @@
 <?php
-class Account extends Database{
+namespace auth;
+
+class Account extends \data\Database{
   public $account_id;
   private $errors;
   public function __construct( ){

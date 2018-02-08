@@ -8,7 +8,7 @@ include("includes/config.php");
 //check if product id has been set via a get request
 if( isset($_GET["id"]) ){
   $product_id = $_GET["id"];
-  $products = new Products();
+  $products = new products\Products();
   $product = $products -> getProductById( $product_id );
   //we use ucwords() to capitalise the product name
   $page_title = ucwords( $product["name"] );

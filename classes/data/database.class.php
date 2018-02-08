@@ -1,4 +1,6 @@
 <?php
+namespace data;
+
 class Database{
   protected $connection;
   protected function __construct(){

@@ -8,7 +8,7 @@
   padding-left:10px;
   display: flex;
   align-items:center;
-  height:80px;
+  /*height:80px;*/
 }
 .logo img{
   max-width: 100%;
@@ -28,6 +28,8 @@
 .navbar-form .form-group button{
   border-radius: 0 4px 4px 0;
 }
+
+
 .product-column{
   min-height: 450px;
 }

@@ -1,4 +1,6 @@
 <?php
+namespace navigation;
+
 class Navigation{
   private $logged_in;
   private $current_page;

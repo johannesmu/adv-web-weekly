@@ -1,4 +1,6 @@
 <?php
 include("autoloader.php");
-$test = new configuration\SiteConfiguration();
+
+$that = array("apples","orange","watermelon");
+echo implode(" OR ",$that);
 ?>

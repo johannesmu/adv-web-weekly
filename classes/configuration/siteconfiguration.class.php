@@ -3,12 +3,9 @@ namespace configuration;
 class SiteConfiguration{
   public $site_config;
   public function __construct(  ){
-    $config_dir = "config";
-    if( is_readable( $config_dir ) == false ){
-      $config_dir = "../config";
-    }
-    $config_json = "$config_dir/siteconfig.json";
+    $config_dir = $_SERVER["DOCUMENT_ROOT"] . "/config";
     
+    $config_json = "$config_dir/siteconfig.json";
     if ( is_readable( $config_json ) ){
       //read the json file 
       $file_data = file_get_contents( $config_json );

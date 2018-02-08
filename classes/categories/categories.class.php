@@ -1,5 +1,7 @@
 <?php
-class Categories extends Database{
+namespace categories;
+
+class Categories extends \data\Database{
   private $categories;
   private $selected;
   private $query = "SELECT 
@@ -13,13 +15,12 @@ class Categories extends Database{
   public function __construct() {
     parent::__construct();
     
-    if($_GET["category"]){
+    if( isset($_GET["category"]) ){
       $this -> selected = $_GET["category"];
     }
     else{
       $this -> selected = 0;
     }
-    
     $this -> getCategories();
   }
   
@@ -36,18 +37,18 @@ class Categories extends Database{
         }
         array_push( $this -> categories,$category );
       }
+      //add all categories link
+      
+      $allcategories = array("id" => 0,"name" => "all categories", "cat_count" => 0);
+      if( $this -> selected == 0){
+        $allcategories["class"] = "active";
+      }
+      array_unshift( $this -> categories, $allcategories);
     }
     $statement -> close();
   }
   public function getCategoriesArray() {
     return $this -> categories;
-  }
-  public function getCategoriesHTML( array $classes ){
-    $list_element = array();
-    if( count( $this -> categories ) > 0 ){
-      $class_names = implode(" ", $classes );
-      $ul = "<ul class=\"\"></ul>";
-    }
   }
   public function getCategoriesJSON(){
     

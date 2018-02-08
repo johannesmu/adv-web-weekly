@@ -1,4 +1,6 @@
 <?php
+namespace utilities;
+
 class TruncateWords{
   private $length;
   private $words_array;

@@ -10,7 +10,7 @@
   <script>
   <?php 
   //print php GET vars for javascript to use
-  $get_vars = new PrintGetVars();
+  $get_vars = new utilities\PrintGetVars();
   echo $get_vars;
   ?>
   </script>

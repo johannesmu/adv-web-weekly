@@ -9,12 +9,13 @@ function auto_load_class($classname){
   
   //create a path to the class
   $class_file = $classes_dir . str_replace( '\\', '/', $filename ) . ".class.php";
-  echo $class_file;
   if( is_readable($class_file) ){
-    include_once($class_file);
+    require_once($class_file);
+    //echo "included $class_file<br> ";
   }
   else{
     error_log("class file for $classname does not exist or is unreadable", 0);
+    //echo "not included $class_file<br>";
   }
 }
 spl_autoload_register("auto_load_class");

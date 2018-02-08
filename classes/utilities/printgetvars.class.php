@@ -1,4 +1,6 @@
 <?php
+namespace utilities;
+
 class PrintGetVars{
   private $vars = array();
   public function __construct(){

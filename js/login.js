@@ -75,7 +75,7 @@ function showAlert(type,msg){
   $('#login-form').append(clone);
 }
 
-
+//login module
 var login = ( function ()  {
   let module = {};
   module.init = () => {

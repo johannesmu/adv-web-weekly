@@ -1,5 +1,7 @@
 <?php
-class AuthToken extends Account{
+namespace auth;
+
+class AuthToken extends \auth\Account {
   private $token;
   public function __construct(){
     $account = parent::__construct();
