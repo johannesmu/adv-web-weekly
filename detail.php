@@ -11,7 +11,7 @@ if( isset($_GET["id"]) ){
   $products = new products\Products();
   $product = $products -> getProductById( $product_id );
   //we use ucwords() to capitalise the product name
-  $page_title = ucwords( $product["name"] );
+  $page_title = ucwords( $product[0]["name"] );
 }
 else{
   
@@ -25,13 +25,18 @@ else{
     <div class="container">
       <div class="row product-detail-row">
         <div class="col-md-6">
-          <img class="img-responsive" src="/images/products/<?php echo $product["image"];  ?>">
+          <?php
+          foreach( $product as $item ){
+            $image = $item["image"];
+            echo "<img class=\"img-responsive\" src=\"/images/products/$image\">";
+          }
+          ?>
         </div>
         <div class="col-md-6">
           <h2 class="product-title-single">
-            <?php echo $product["name"]; ?>
+            <?php echo $product[0]["name"]; ?>
           </h2>
-          <p><?php echo $product["description"]; ?></p>
+          
           <form id="shop-form" method="get">
             <div class="row">
               <div class="col-md-4">
@@ -63,8 +68,8 @@ else{
             </div>
             <input type="hidden" id="product-id" value="<?php echo $product["id"]; ?>">
           </form>
-          <h4 class="price"><?php echo $product["price"]; ?></h4>
-         
+          <h4 class="price"><?php echo $product[0]["price"]; ?></h4>
+          <p><?php echo $product[0]["description"]; ?></p>
         </div>
       </div>
     </div>

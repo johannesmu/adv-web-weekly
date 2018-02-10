@@ -1,59 +1,61 @@
 //categories module
 var categories = (function( $ ){
-  let categories = {};
-  categories.init = function(){
-    categories.url = '/ajax/ajaxcategories.php';
-    categories.bind();
+  let module = {};
+  module.init = function(){
+    module.url = '/ajax/categories/ajx.categories.php';
+    module.bind();
   }
-  categories.bind = function(){
+  module.bind = function(){
     //bind listeners
-    categories.load();
+    //prevent category filter form from submitting
+    $('#category-filter-form').on('submit', (event) => {
+      event.preventDefault();
+    });
+    module.load();
   }
-  categories.load = function () {
+  module.load = function () {
     //make an ajax request
-    let req = categories.request( categories.url, categories.render() );
+    let reqdata = { categories: 'all'};
     
-    let listelement = categories.getTemplate('#catnav-template');
-    
-    //on success
-    //load templates
-    //merge data
-    //
+    let req = module.request( module.url, reqdata )
+    .done( (response) => {
+      if(response.success){
+        module.renderList( response.data );
+      }
+    });
   }
-  categories.request = function ( ReqUrl, callback ) {
-    let ReqData = { categories : "all" };
-    $.ajax({
+  module.request = ( ReqUrl, ReqData ) => {
+    return $.ajax({
       type: 'post',
       url: ReqUrl,
       data: ReqData,
       dataType: 'json',
       encode: true
-    })
-    .done( (response) => {
-      console.log(response.data);
-      if(response.success == true){
-        
-        callback( response.data );
-      }
-      else{
-        return false;
-      }
     });
   }
   
-  categories.getTemplate = function (id) {
-    $( document ).ready( () => {
-      let template = $('#catnav-item').html().trim();
+  module.getTemplate = function (id) {
+      let template = $(id).html().trim();
       let clone = $(template);
       return clone;  
-    } );
-    
   }
   
-  categories.render = function ( data ){
-    console.log(data);
+  module.renderList = ( data ) => {
+    data.forEach( (item) => {
+      //get the template for the category
+      let template = module.getTemplate('#category-template');
+      $(template).find('.checkbox-label').text( item.name );
+      $(template).find('.badge').text( item.cat_count );
+      let input = $(template).find('input[type="checkbox"]');
+      $(input).val( item.id );
+      if( item.class ){
+        $(input).attr('checked','');
+      }
+      $('#category-filter').append(template);
+    });
   }
-  return categories;
+    
+  return module;
 }( $ ));
 
 $(document).ready( () => { categories.init(); }) ;

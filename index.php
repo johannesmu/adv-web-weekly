@@ -29,31 +29,33 @@ $cat_array = $categories -> getCategoriesArray();
         <nav class="col-md-2">
           <!--categories-->
           <!--<h4>Categories</h4>-->
-          <ul class="nav nav-pills nav-stacked">
             <?php
-              if( count($cat_array) > 0 ){
-                foreach( $cat_array as $cat_nav_item ){
-                  $id = $cat_nav_item["id"];
-                  $name = ucwords( $cat_nav_item["name"] );
-                  $count = $cat_nav_item["cat_count"];
-                  if( isset( $cat_nav_item["class"] ) ){
-                    $class_attribute = "class=\"active\"";
-                  }
-                  else{
-                    $class_attribute = "";
-                  }
-                  $url = "index.php?" . urlencode("category[]") . "=$id";
-                  echo "<li $class_attribute >
-                  <a href=\"$url\">$name";
-                  if( $count > 0 ){
-                    echo "<span class=\"badge\">$count</span>";
-                  }
-                  echo "</a></li>";
-                }
+              // if( count($cat_array) > 0 ){
+              //   foreach( $cat_array as $cat_nav_item ){
+              //     $id = $cat_nav_item["id"];
+              //     $name = ucwords( $cat_nav_item["name"] );
+              //     $count = $cat_nav_item["cat_count"];
+              //     if( isset( $cat_nav_item["class"] ) ){
+              //       $class_attribute = "class=\"active\"";
+              //     }
+              //     else{
+              //       $class_attribute = "";
+              //     }
+              //     $url = "index.php?" . urlencode("category[]") . "=$id";
+              //     echo "<li $class_attribute >
+              //     <a href=\"$url\">$name";
+              //     if( $count > 0 ){
+              //       echo "<span class=\"badge\">$count</span>";
+              //     }
+              //     echo "</a></li>";
+              //   }
                 
-              }
+              // }
             ?>
-          </ul>
+          <form method="post" id="category-filter-form">
+            <div id="category-filter"></div>
+            <button type="submit" class="btn btn-default">Filter</button>
+          </form>
         </nav>
         <main class="col-md-10">
           <!--products-->
@@ -93,28 +95,20 @@ $cat_array = $categories -> getCategoriesArray();
             //   }
             // }
             ?>
-            <form>
-              <div class="container">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" value="7" name="funks[]">
-                    Option one is this and that&mdash;be sure to include why it's great
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" value="9" name="funks[]">
-                    Option one is this and that&mdash;be sure to include why it's great
-                  </label>
-                </div>
-                <button class="btn btn-default">Funk it</button>
-              </div>
-            </form>
         </main>
       </div>
       
     </div>
     <script src="js/categories.js"></script>
+    <template id="category-template">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="categories[]" value="">
+          <span class="checkbox-label"></span>
+          <span class="badge"></span>
+        </label>
+      </div>
+    </template>
     <template id="catnav-item">
       <li>
         <a href=""><span class="badge"></span></a>

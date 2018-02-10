@@ -2,8 +2,8 @@
 namespace categories;
 
 class Categories extends \data\Database{
-  private $categories;
-  private $selected;
+  private $categories = array();
+  private $selected = array();
   private $query = "SELECT 
     categories.category_id AS id,
     categories.name AS name,
@@ -16,28 +16,40 @@ class Categories extends \data\Database{
     parent::__construct();
     
     if( isset($_GET["category"]) ){
-      $this -> selected = $_GET["category"];
+      foreach( $_GET["category"] as $cat){
+        array_push( $this-> selected, $cat );
+      }
     }
     else{
-      $this -> selected = 0;
+      $this -> selected[0] = 0;
     }
-    $this -> getCategories();
   }
   
-  private function getCategories(){
+  public function getCategories(){
     $statement = $this -> connection -> prepare( $this -> query );
     $statement -> execute();
     $result = $statement -> get_result();
     if( $result -> num_rows > 0){
       $this -> categories = array();
       while( $category = $result -> fetch_assoc() ){
-        //inject class into the category object
-        if( $category["id"] == $this -> selected ){
-          $category["class"] = "active";
+        // inject class into the category object
+        $length = count( $this -> selected );
+        foreach( $this -> selected as $selected){
+          if( $selected  ==  $category["id"] ){
+            $category["class"] = "active";
+          }
         }
         array_push( $this -> categories,$category );
       }
-      //add all categories link
+      return $this -> categories;
+    }
+    $statement -> close();
+  }
+  
+  public function getCategoriesArray($with_all = false) {
+    $this -> getCategories();
+    if($with_all == true){
+      //inject "all categories" link into the beginning of array
       
       $allcategories = array("id" => 0,"name" => "all categories", "cat_count" => 0);
       if( $this -> selected == 0){
@@ -45,13 +57,12 @@ class Categories extends \data\Database{
       }
       array_unshift( $this -> categories, $allcategories);
     }
-    $statement -> close();
-  }
-  public function getCategoriesArray() {
     return $this -> categories;
   }
+  
   public function getCategoriesJSON(){
-    
+    $json = json_encode( $this -> categories );
+    return $json;
   }
   public function __toString(){
     
