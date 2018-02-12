@@ -1,10 +1,13 @@
 <?php
-include("autoloader.php");
+$docroot = $_SERVER["DOCUMENT_ROOT"];
+include("$docroot/autoloader.php");
 
-$cat = new categories\Categories();
-$cat_items = $cat -> getCategories();
-print_r( $cat_items );
+$response = array();
+$errors = array();
 
+$products_class = new products\Products();
+
+print_r( $products_class -> categories);
 
 ?>
 <form method="get" action="test.php">

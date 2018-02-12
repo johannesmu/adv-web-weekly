@@ -15,7 +15,6 @@ class Navigation{
     }
     //get the name of the current page
     $this -> current_page = basename( $_SERVER["PHP_SELF"] );
-    echo $this -> current_page;
   }
   
   public function getNavigation(){

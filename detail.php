@@ -24,18 +24,9 @@ else{
     <?php include("includes/navigation.php"); ?>
     <div class="container">
       <div class="row product-detail-row">
+        <div class="col-md-6 product-detail-image"></div>
         <div class="col-md-6">
-          <?php
-          foreach( $product as $item ){
-            $image = $item["image"];
-            echo "<img class=\"img-responsive\" src=\"/images/products/$image\">";
-          }
-          ?>
-        </div>
-        <div class="col-md-6">
-          <h2 class="product-title-single">
-            <?php echo $product[0]["name"]; ?>
-          </h2>
+          <h2 class="product-detail-title cap"></h2>
           
           <form id="shop-form" method="get">
             <div class="row">
@@ -68,8 +59,8 @@ else{
             </div>
             <input type="hidden" id="product-id" value="<?php echo $product["id"]; ?>">
           </form>
-          <h4 class="price"><?php echo $product[0]["price"]; ?></h4>
-          <p><?php echo $product[0]["description"]; ?></p>
+          <h4 class="price product-detail-price"></h4>
+          <p class="product-detail-description"></p>
         </div>
       </div>
     </div>
@@ -79,6 +70,38 @@ else{
     </template>
     <template id="template-tick">
       <span class="glyphicon glyphicon-check"></span>
+    </template>
+    <!--single image template-->
+    <template id="single-image">
+      <img class="product-image" src="">
+    </template>
+    <!--multiple image template-->
+    <template id="image-carousel">
+      <div id="product-image-carousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators"></ol>
+        <div class="carousel-inner" role="listbox"></div>
+      
+        <!-- Controls -->
+        <a class="left carousel-control" href="#product-image-carousel" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#product-image-carousel" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </template>
+    <template id="carousel-item-template">
+      <div class="item">
+        <img src="" alt="">
+        <div class="carousel-caption">
+        </div>
+      </div>
+    </template>
+    <template id="carousel-indicator-template">
+      <li data-target="#product-image-carousel" data-slide-to=""></li>
     </template>
   </body>
 </html>

@@ -4,7 +4,7 @@ namespace utilities;
 class TruncateWords{
   private $length;
   private $words_array;
-  private $words;
+  public $words;
   public function __construct($str,$limit = 10){
     $this -> words_array = explode(" ", $str);
     for($i=0; $i<$limit; $i++){

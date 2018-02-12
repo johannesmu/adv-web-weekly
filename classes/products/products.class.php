@@ -1,10 +1,9 @@
 <?php
-//namespace shop\products;
 namespace products;
 
 class Products extends \data\Database {
   //set category as an array
-  private $categories = array();
+  public $categories = array();
   private $page = 1;
   private $perpage = 8;
   public $page_total;
@@ -18,9 +17,9 @@ class Products extends \data\Database {
     //check if there are $_GET variables 
     if( count($_GET) > 0 ){
       //check categories
-      if( count($_GET["category"]) > 0){
+      if( count($_GET["categories"]) > 0){
         $this -> categories = array();
-        foreach( $_GET["category"] as $cat ){
+        foreach( $_GET["categories"] as $cat ){
           array_push( $this -> categories, $cat );
         }
       }
@@ -54,6 +53,7 @@ class Products extends \data\Database {
     //-----construct query according to parameters supplied
     $query_param_string = array();
     $query_param_values = array();
+    //process category parameters
     if( count( $this -> categories ) > 0 ){
       $tbl_products_categories = "products_categories";
       //add join with products_categories table
@@ -70,18 +70,19 @@ class Products extends \data\Database {
       }
       //implode the categories into a string
       $cat_query_string = implode( " OR ", $cat_query );
-      //add to the main query
-      $query = $query . " WHERE products.active=1 AND " . $cat_query_string;
+      // //add to the main query
+      // $query = $query . " WHERE " . $cat_query_string;
     }
-    // echo $query;
     
     
     //process page variables
-    $statement = $this -> connection ->  prepare( $query );
+   
     //get current page
     
+    //add limiter to query
+    $query = $query . " WHERE products.active=1 GROUP BY products.id";
     // call_user_func_array(array($statement,'bind_param'), $this -> params_array);
-    
+    $statement = $this -> connection ->  prepare( $query );
     $statement -> bind_param( "ii" , $this -> perpage, $this -> page );
     if( $statement -> execute() ){
       $result = $statement -> get_result();
@@ -91,7 +92,20 @@ class Products extends \data\Database {
         //SQL_CALC_FOUND_ROWS and FOUND_ROWS()
         $products = array();
         while( $row = $result -> fetch_assoc() ){
-          array_push( $products, $row );
+          $id = $row["id"];
+          $name = $row["name"];
+          $price = $row["price"];
+          $image_file_name = $row["image_file_name"];
+          $desc = new \utilities\TruncateWords( $row["description"],15 );
+          $description = $desc -> words;
+          //$description = $row["description"];
+          array_push( $products, array( 
+            "id" => $id, 
+            "name" => $name, 
+            "price" => $price,
+            "description" => $description, 
+            "image_file_name" => $image_file_name 
+            ) );
         }
         return $products;
       }
@@ -123,7 +137,6 @@ class Products extends \data\Database {
     $statement = $this -> connection -> prepare( $query );
     $statement -> bind_param( "i", $product_id);
     if( $statement -> execute() == false ){
-      error_log(0,"failed to get productbyid");
       return false;
     }
     else{
@@ -142,36 +155,6 @@ class Products extends \data\Database {
       }
     }
     $statement -> close();
-  }
-  public function getAllProducts(){
-    $query = "SELECT 
-            products.id,
-            products.name,
-            products.description,
-            products.price,
-            products.active,
-            images.image_file_name
-            FROM products
-            INNER JOIN products_images
-            ON products.id = products_images.product_id
-            INNER JOIN images
-            ON products_images.image_id = images.image_id
-            GROUP BY products.id";
-    $statement = $this -> connection ->  prepare( $query );
-    if( $statement -> execute() ){
-      $result = $statement -> get_result();
-      //check number of rows in result
-      if( $result -> num_rows > 0){
-        $products = array();
-        while( $row = $result -> fetch_assoc() ){
-          array_push( $products, $row );
-        }
-        return $products;
-      }
-      else{
-        return false;
-      }
-    }
   }
 }
 ?>

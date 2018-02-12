@@ -25,7 +25,7 @@
         
       </div>
       <div class="col-md-4">
-        <p class="pagination" style="padding:6px 12px;">Page 1 of 10</p>
+        <p id="products-results-total" class="pagination" style="padding:6px 12px;">Page 1 of 10</p>
       </div>
     </div>
   </div>

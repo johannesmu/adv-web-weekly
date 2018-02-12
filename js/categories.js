@@ -9,7 +9,7 @@ var categories = (function( $ ){
     //bind listeners
     //prevent category filter form from submitting
     $('#category-filter-form').on('submit', (event) => {
-      event.preventDefault();
+      //event.preventDefault();
     });
     module.load();
   }

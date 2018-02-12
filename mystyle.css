@@ -1,3 +1,7 @@
+img{
+  max-width:100%;
+}
+
 .price::before{
   content:"$";
   margin-right:5px;
@@ -29,9 +33,24 @@
   border-radius: 0 4px 4px 0;
 }
 
+.products-row{
+  min-height: 500px;
+}
+.products-row:empty::after{
+  content:"No products found";
+  display: block;
+  margin-top:10%;
+  font-size:32px;
+  text-align: center;
+  color:#cccccc;
+}
 
-.product-column{
+.product-thumbnail{
   min-height: 450px;
+}
+.product-thumbnail a{
+  text-decoration: none;
+  color: inherit;
 }
 .product-title{
   text-transform: capitalize;
@@ -67,6 +86,10 @@
 }
 .product-qty-group{
   max-width:120px;
+}
+
+.cap{
+  text-transform: capitalize;
 }
 /*animate spinner icon*/
 .spinner {

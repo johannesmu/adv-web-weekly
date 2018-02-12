@@ -16,7 +16,7 @@
         <span class="icon-bar"></span>
       </button>
     </div>
-    <div class="list-group navbar-right">
+    <div class="navbar-right">
       <a href="/phpmyadmin/" class="navbar-text " target="_blank">Database</a>
       <a href="wishlist.php" class="navbar-text list">
         <span class="glyphicon glyphicon-heart"></span>
@@ -47,7 +47,7 @@
     </form>
     <div class="collapse navbar-collapse" id="main-nav">
       <?php
-      $nav = new navigation\Navigation();
+      $nav = new \navigation\Navigation();
       echo $nav -> getNavigation();
       ?>
     </div>
