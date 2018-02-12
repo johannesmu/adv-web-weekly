@@ -1,2 +1,5 @@
 php.php
 php_errors.log
+test.php
+php.ini
+**/**/php_errors.log
