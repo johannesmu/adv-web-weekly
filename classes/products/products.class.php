@@ -13,7 +13,6 @@ class Products extends \data\Database {
     //the $connection of the Database class is now part of this class
     //can be called as $this -> connection
     parent::__construct();
-    //print_r($_GET["category"]);
     //check if there are $_GET variables 
     if( count($_GET) > 0 ){
       //check categories
@@ -22,6 +21,7 @@ class Products extends \data\Database {
         foreach( $_GET["categories"] as $cat ){
           array_push( $this -> categories, $cat );
         }
+        print_r( $this -> categories );
       }
       //check page variable
       if( isset($_GET["page"]) ){
@@ -51,39 +51,68 @@ class Products extends \data\Database {
             // GROUP BY products.id 
             // LIMIT ? OFFSET ?";
     //-----construct query according to parameters supplied
+    
+    //create an array to pass string eg "iii" to bind_param
     $query_param_string = array();
+    //create an array to pass values to the bind_param
     $query_param_values = array();
-    //process category parameters
+    
+    //--CATEGORIES
+    //if there are categories selected, create a join with products_categories table
     if( count( $this -> categories ) > 0 ){
+      //store the name of the table in variable
       $tbl_products_categories = "products_categories";
       //add join with products_categories table
-      $query = $query . " INNER JOIN $tbl_products_categories ON products.id = $tbl_products_categories.product_id ";
-      $cat_query = array();
+      $category_join = " INNER JOIN $tbl_products_categories ON products.id =  $tbl_products_categories.product_id ";
+      $category_query = array();
       foreach( $this -> categories as $cat ){
         //ignore if category = 0
         if( $cat !== 0 ){
-          array_push( $cat_query, "$tbl_products_categories.category_id=?");
+          array_push( $category_query, "$tbl_products_categories.category_id=?");
           array_push( $query_param_string, "i" );
           //we need each query param value as a reference
           array_push( $query_param_values, $cat );
         }
       }
-      //implode the categories into a string
-      $cat_query_string = implode( " OR ", $cat_query );
-      // //add to the main query
-      // $query = $query . " WHERE " . $cat_query_string;
+      //implode the categories into a string so we have
+      //products_categories.category_id=? OR products_categories.category_id=?
+      $cat_query_string = implode( " OR ", $category_query );
     }
     
-    
+    //--PAGE
     //process page variables
-   
-    //get current page
+    //to use pagination, we need to calculate offset
+    //if we have 8 results per page, then offset is calculated using pagenumber $page -1 * perpage
+    $offset = ($this -> page-1) * $this -> perpage;
+    //add to query_param_string and query_param_values
+    array_push( $query_param_string , "i" );
+    array_push( $query_param_values , $this -> perpage );
+    array_push( $query_param_string , "i" );
+    array_push( $query_param_values , $offset );
     
-    //add limiter to query
-    $query = $query . " WHERE products.active=1 GROUP BY products.id";
-    // call_user_func_array(array($statement,'bind_param'), $this -> params_array);
+    //add the query_param_string to the beginning of query_param_values
+    array_unshift( $query_param_values, implode( "", $query_param_string ));
+    
+    //build the query with category parameters
+    $limit = " LIMIT ? OFFSET ?";
+    //add category join
+    if( count( $this -> categories) > 0){
+      $query = $query . " " . $category_join;
+      //add category query string
+      $query = $query . " WHERE " . $cat_query_string . " AND products.active=1";
+    }
+    //add limit
+    $query = $query . " " . $limit;
+    
     $statement = $this -> connection ->  prepare( $query );
-    $statement -> bind_param( "ii" , $this -> perpage, $this -> page );
+    
+    //pass parameters to the statement
+    $parameters_array = array();
+    foreach( $query_param_values as $key => $value ){
+      $parameters_array[$key] = &$query_param_values[$key];
+    }
+    echo $query;
+    call_user_func_array( array($statement,'bind_param'), $parameters_array );
     if( $statement -> execute() ){
       $result = $statement -> get_result();
       //check number of rows in result
