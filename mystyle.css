@@ -63,7 +63,10 @@ img{
 .product-image:hover{
   border-bottom:2px solid red;
 }
-
+.product-image-container{
+  background-color:#cccccc;
+  min-height: 80px;
+}
 .product-price{
   color: #999;
   font-weight:200;

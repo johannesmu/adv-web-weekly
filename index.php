@@ -63,7 +63,9 @@ include("includes/tester.php");
       <div class="col-md-3 col-sm-6 col-xs-12 product-thumbnail">
         <a href="#" class="product-detail-link">
           <h3 class="product-title"></h3>
-          <img class="product-image">
+          <div class="product-image-container">
+            <img class="product-image">
+          </div>
         </a>
         <h4 class="price product-price"></h4>
         <div class="product-description"></div>

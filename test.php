@@ -8,15 +8,12 @@ $errors = array();
 $products_class = new products\Products();
 $products = $products_class -> getProducts();
 
-print_r( $products );
+echo json_encode($products);
 
-// // print_r( $products );
-// $test = array("ii","oranges","apples");
-// $params = array();
-// foreach( $test as $key => $value){
-//   $params[$key] = &$test[$key];
-// }
-// print_r($params);
+$get = $_GET["categories"];
+if( gettype( $get ) == "array" ){
+  //echo "hello array";
+}
 ?>
 <!doctype html>
 <html>

@@ -6,6 +6,14 @@ var productDetail = (function(){
     $( document ).ready(() =>{
       module.input = $('input[name="quantity"]');
       module.quantity = $(module.input).val();
+      
+      let params = module.getParams();
+      if(params){
+        module.product_id = params.id;
+      }
+      else{
+        module.product_id = _get_id;
+      }
       module.product_id = _get_id;
       module.bind();
     });
@@ -52,6 +60,21 @@ var productDetail = (function(){
       //display feedback
     });
     module.loadProductData();
+  }
+  module.getParams = function (){
+    //this function gets the GET parameters and return JSON
+    let urlparams = window.location.search.substr(1).split('&');
+    let params_obj = {};
+    let vars = urlparams.forEach( (item) => {
+      let tmp_array = item.split('=');
+      let obj_key = tmp_array[0];
+      let obj_value = tmp_array[1];
+      if( obj_value.indexOf(',') > -1 ){
+        obj_value = obj_value.split(',');
+      }
+      params_obj[ obj_key ] = obj_value;
+    });
+    return params_obj;
   }
   module.updateQuantity = function (qty) {
     $(module.input).val(qty);

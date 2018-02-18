@@ -9,7 +9,10 @@ var categories = (function( $ ){
     //bind listeners
     //prevent category filter form from submitting
     $('#category-filter-form').on('submit', (event) => {
-      //event.preventDefault();
+      event.preventDefault();
+      module.selected = module.getSelectedCategories(event);
+      //get data from form
+      //call products.getProducts() with categories
     });
     module.load();
   }
@@ -33,7 +36,19 @@ var categories = (function( $ ){
       encode: true
     });
   }
-  
+  module.getSelectedCategories = function (event) {
+    let form = event.target;
+    let inputs = form.querySelectorAll('input');
+    let data = {};
+    let selected_categories = [];
+    inputs.forEach( (item) => {
+      if( item.checked ){
+        selected_categories.push( item.value );
+      }
+    });
+    data.categories = selected_categories;
+    return data;
+  }
   module.getTemplate = function (id) {
       let template = $(id).html().trim();
       let clone = $(template);

@@ -9,8 +9,9 @@ if( $_SERVER["REQUEST_METHOD"] == "POST"){
   $products_class = new products\Products();
   $products = $products_class -> getProducts();
   if( count($products) > 0){
+    $response = $products;
     $response["success"] = true;
-    $response["data"] = $products;
+    // $response["data"] = $products;
   }
   else{
     $response["success"] = false;
